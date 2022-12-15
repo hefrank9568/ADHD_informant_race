@@ -7,6 +7,7 @@ library(tidyverse)
 rm(list = ls())
 #####set path to data#####
 path_dat <- "/Users/zpeng/OneDrive/Desktop/ABCD/Analysis data/ADHD_informant_race/"##change this for your environment
+#path_dat <- "/Users/quanfahe/Library/CloudStorage/OneDrive-UW-Madison/GradSchool/Research/ABCD/"
 here()
 ####Load separate data and select relevant variables####
 ####race-ethnicity load from ABCD-invariance project####
@@ -90,17 +91,17 @@ abcd_cbcls[,2:ncol(abcd_cbcls)] <- as.data.frame(lapply(abcd_cbcls[,2:ncol(abcd_
 
 
 #####Parent KSADS####
-#https://nda.nih.gov/data_structure.html?short_name=abcd_ksad501
+#https://nda.nih.gov/data_structure.html?short_name=abcd_ksad01
 
-abcd_ksads <- fread(paste0(path_dat, "abcd_ksad501.txt")) %>%
+abcd_ksads <- fread(paste0(path_dat, "abcd_ksad501.txt")) %>%   ###should be abcd_ksad01
   slice(-1) %>%
   filter(eventname == "baseline_year_1_arm_1") %>%
   dplyr::select(-c("eventname","dataset_id","collection_title")) %>%
-  dplyr::select(subjectkey, paste0("ksads_14_",394:409,"_t"), paste0("ksads_14_",853:856,"_t")) %>%
+  dplyr::select(subjectkey, paste0("ksads_14_",394:409,"_t"), paste0("ksads_14_",853:856,"_t")) %>% ##need to change these item number;
   na_if(555) 
   
 abcd_ksads[,2:ncol(abcd_ksads)] <- as.data.frame(lapply(abcd_ksads[,2:ncol(abcd_ksads)], as.numeric))
-
+head(abcd_ksads)
 ##Present ADHD symptoms
 #sapply(seq(394,409,by=1), function(X) paste0("ksads_14_",X,"_t")) 
 
