@@ -93,15 +93,22 @@ abcd_cbcls[,2:ncol(abcd_cbcls)] <- as.data.frame(lapply(abcd_cbcls[,2:ncol(abcd_
 #####Parent KSADS####
 #https://nda.nih.gov/data_structure.html?short_name=abcd_ksad01
 
-abcd_ksads <- fread(paste0(path_dat, "abcd_ksad501.txt")) %>%   ###should be abcd_ksad01
+abcd_ksads <- fread(paste0(path_dat, "abcd_ksad01.txt")) %>%   ###should be abcd_ksad01
   slice(-1) %>%
   filter(eventname == "baseline_year_1_arm_1") %>%
   dplyr::select(-c("eventname","dataset_id","collection_title")) %>%
-  dplyr::select(subjectkey, paste0("ksads_14_",394:409,"_t"), paste0("ksads_14_",853:856,"_t")) %>% ##need to change these item number;
+  mutate(checkpoint = 2, id = row_number()) %>%
+  dplyr::select(subjectkey, ksads_14_856_p, ksads_14_853_p, ksads_14_853_p, ksads_14_398_p, ksads_14_403_p,
+                ksads_14_405_p, ksads_14_406_p, ksads_14_76_p, ksads_14_396_p, ksads_14_397_p, ksads_14_404_p,
+                ksads_14_85_p, ksads_14_77_p, ksads_14_84_p, ksads_14_401_p, ksads_14_80_p, ksads_14_81_p,
+                ksads_14_400_p, ksads_14_88_p, ksads_14_399_p, ksads_14_408_p, ksads_14_394_p, ksads_14_395_p,
+                ksads_14_407_p, ksads_14_402_p) %>% ##need to change these item number;
   na_if(555) 
-  
+
+colnames(abcd_ksads)
 abcd_ksads[,2:ncol(abcd_ksads)] <- as.data.frame(lapply(abcd_ksads[,2:ncol(abcd_ksads)], as.numeric))
-head(abcd_ksads)
+
+
 ##Present ADHD symptoms
 #sapply(seq(394,409,by=1), function(X) paste0("ksads_14_",X,"_t")) 
 
