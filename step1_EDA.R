@@ -121,4 +121,5 @@ skim_tee(abcd_merged)
 
 ####save to RData####
 setwd(path_dat)
-saveRDS(abcd_merged, "abcd_merged.RData")
+#saveRDS(abcd_merged, "abcd_merged.RData")
+write.csv(abcd_merged, "abcd_merged.csv", row.names = FALSE)
