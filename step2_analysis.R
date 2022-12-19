@@ -13,7 +13,7 @@ data <- data %>% filter(Race_three != "NA")
 skim(data)
 
 data$adhd_core_sum <- data %>% 
-  select(c("ksads_14_77_p", "ksads_14_76_p", "ksads_14_88_p","ksads_14_80_p", "ksads_14_81_p")) %>%
+  select(c("ksads_14_77_p", "ksads_14_76_p", "ksads_14_88_p","ksads_14_80_p", "ksads_14_81_p")) %>% ##why these five?
   rowSums(na.rm = F)
 
 
@@ -24,13 +24,16 @@ data$adhd_core_sum <- data %>%
 #data %>% filter(Race_three == "1")
 
 #data %>% filter(Race_three == "2")
+
+
+
 ####Between racial-ethnic group and within informant####
 
 #####look at the mean of adhd_core_sum ... in each group####
 data %>% group_by(Race_three) %>% 
   summarise(mean_adhd = mean(adhd_core_sum, na.rm = T), sd_adhd = sd(adhd_core_sum, na.rm = T),
             mean_cbcl_external = mean(cbcl_scr_syn_external_t, na.rm = T), sd_cbcl_external = sd(cbcl_scr_syn_external_t, na.rm = T),
-            mean_cbcl_totprob = mean(cbcl_scr_syn_totprob_t, na.rm = T, sd_cbcl_totprob = sd(cbcl_scr_syn_totprob_t, na.rm = T)))
+            mean_cbcl_totprob = mean(cbcl_scr_syn_totprob_t, na.rm = T, sd_cbcl_totprob = sd(cbcl_scr_syn_totprob_t, na.rm = T))) ##what about cbcl_scr_syn_attention_t?
 
 #####distribution of adhd core sum in each racial/ethnic group####
 ggplot(data, aes(x = factor(Race_three), y = rnorm(adhd_core_sum, mean = T))) +
@@ -47,7 +50,7 @@ data %>% filter(adhd_core_sum != "NA") %>% aov(rnorm(adhd_core_sum, mean = T) ~ 
 data %>% filter(cbcl_scr_syn_totprob_t != "NA") %>% aov(rnorm(cbcl_scr_syn_totprob_t, mean = T) ~ factor(Race_three), .) %>% summary()
 data %>% filter(cbcl_scr_syn_external_t != "NA") %>% aov(rnorm(cbcl_scr_syn_external_t, mean = T) ~ factor(Race_three), .) %>% summary()
 
-#####t-test between racial-enthnic groups####
+#####t-test between racial-enthnic groups####  ----> better to do ANOVA and compare the three groups; and then do post-hoc analyses for pair-wise comparison. i.e., TukeyHSD() in R, and put the ANOVA object as the argument for this function
 Hispanic_white <- data %>% filter(Race_three == "0"|Race_three =="1")
 black_white <- data %>% filter(Race_three == "2"|Race_three =="1") 
 hispanic_black <- data %>% filter(Race_three == "0"|Race_three =="2") 
