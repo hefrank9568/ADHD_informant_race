@@ -24,10 +24,11 @@ data$adhd_core_sum <- data %>%
 #data %>% filter(Race_three == "2")
 ####Between racial-ethnic group and within informant####
 
-#####look at the mean of adhd_core_sum in each group####
-data %>% filter(adhd_core_sum != "NA") %>% group_by(Race_three) %>% summarise_at(vars(adhd_core_sum), list(~ mean(., na.rm = T)))
-data %>% filter(cbcl_scr_syn_external_t != "NA") %>% group_by(Race_three) %>% summarise_at(vars(cbcl_scr_syn_external_t), list(~ mean(., na.rm = T)))
-data %>% filter(cbcl_scr_syn_totprob_t != "NA") %>% group_by(Race_three) %>% summarise_at(vars(cbcl_scr_syn_totprob_t), list(~ mean(., na.rm = T)))
+#####look at the mean of adhd_core_sum ... in each group####
+data %>% group_by(Race_three) %>% 
+  summarise(mean_adhd = mean(adhd_core_sum, na.rm = T), sd_adhd = sd(adhd_core_sum, na.rm = T),
+            mean_cbcl_external = mean(cbcl_scr_syn_external_t, na.rm = T), sd_cbcl_external = sd(cbcl_scr_syn_external_t, na.rm = T),
+            mean_cbcl_totprob = mean(cbcl_scr_syn_totprob_t, na.rm = T, sd_cbcl_totprob = sd(cbcl_scr_syn_totprob_t, na.rm = T)))
 
 #####distribution of adhd core sum in each racial/ethnic group####
 ggplot(data, aes(x = factor(Race_three), y = rnorm(adhd_core_sum, mean = T))) +
