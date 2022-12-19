@@ -6,7 +6,9 @@ library(skimr)
 library(broom)
 library(purrr)
 ####Read data####
-data <- read.csv("C:/Users/zpeng/OneDrive/Desktop/ABCD/Analysis data/ADHD_informant_race/abcd_merged.csv")
+path_dat <- "C:/Users/zpeng/OneDrive/Desktop/ABCD/Analysis data/ADHD_informant_race"
+#path_dat <- "/Users/quanfahe/Library/CloudStorage/OneDrive-UW-Madison/GradSchool/Research/ADHD_informant_race"
+data <- read.csv(file.path(path_dat, "abcd_merged.csv"))
 data <- data %>% filter(Race_three != "NA")
 skim(data)
 
