@@ -69,8 +69,7 @@ abcd_pmonitor <- fread(paste0(path_dat, "abcd_ssbpmtf01.txt")) %>%
   slice(-1) %>%
   filter(eventname == "baseline_year_1_arm_1") %>%
   dplyr::select(-c("eventname","dataset_id","collection_title")) %>%
-  dplyr::select(subjectkey, bpm_t_scr_attention_r
-                #,bpm_t_scr_external_r
+  dplyr::select(subjectkey, bpm_t_scr_attention_t
                 )
 
 abcd_pmonitor[,2:ncol(abcd_pmonitor)] <- as.data.frame(lapply(abcd_pmonitor[,2:ncol(abcd_pmonitor)], as.numeric))

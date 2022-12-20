@@ -10,20 +10,54 @@ path_dat <- "C:/Users/zpeng/OneDrive/Desktop/ABCD/Analysis data/ADHD_informant_r
 #path_dat <- "/Users/quanfahe/Library/CloudStorage/OneDrive-UW-Madison/GradSchool/Research/ADHD_informant_race"
 data <- read.csv(file.path(path_dat, "abcd_merged.csv"))
 data <- data %>% filter(Race_three != "NA")
-skim(data)
 
+
+####Descriptive statistics#### 
+## simply skim use the skim() or do the following... :(
+data_mean <- data %>% select(-c("subjectkey")) %>% lapply(., function(x) mean(x, na.rm = T)) %>% as.data.frame() %>% t()
+data_sd <- data %>% select(-c("subjectkey")) %>% lapply(., function(x) sd(x, na.rm = T)) %>% as.data.frame() %>% t()
+data_min <- data %>% select(-c("subjectkey")) %>% lapply(., function(x) min(x, na.rm = T)) %>% as.data.frame() %>% t()
+data_max <- data %>% select(-c("subjectkey")) %>% lapply(., function(x) max(x, na.rm = T)) %>% as.data.frame() %>% t()
+data_range <- data %>% select(-c("subjectkey")) %>% lapply(., function(x) range(x, na.rm = T)) %>% as.data.frame() %>% t()
+
+data_descriptive_stats <- cbind(data_mean, data_sd, data_min, data_max, data_range) %>% as.data.frame() %>% rename(mean = V1, sd = V2, min = V3, max = V4, range = V5)
+
+
+####sum ksads core symp score####
 data$adhd_core_sum <- data %>% 
   select(c("ksads_14_77_p", "ksads_14_76_p", "ksads_14_88_p","ksads_14_80_p", "ksads_14_81_p")) %>%
   rowSums(na.rm = F)
 
-
 ####Within each racial-ethnic group across informant####
-#compare t-score 
-#data %>% filter(Race_three == "0")
+##compare t-score 
+#hispanic
+list_cbcl <- data %>% filter(Race_three == "0") %>% select("cbcl_scr_syn_attention_t") %>% rename(attention = cbcl_scr_syn_attention_t)
+list_cbcl$level <- 0
+list_bpm <- data %>% filter(Race_three == "0") %>% select("bpm_t_scr_attention_t") %>% rename(attention = bpm_t_scr_attention_t)
+list_bpm$level <- 1
 
-#data %>% filter(Race_three == "1")
+t_test_attention_hispanicxinfo <- rbind(list_bpm, list_cbcl) %>% t.test(rnorm(attention) ~ factor(level), data = ., alt = "two.sided", na.rm = T) %>%
+  print()
 
-#data %>% filter(Race_three == "2")
+#white
+list_cbcl <- data %>% filter(Race_three == "1") %>% select("cbcl_scr_syn_attention_t") %>% rename(attention = cbcl_scr_syn_attention_t)
+list_cbcl$level <- 0
+list_bpm <- data %>% filter(Race_three == "1") %>% select("bpm_t_scr_attention_t") %>% rename(attention = bpm_t_scr_attention_t)
+list_bpm$level <- 1
+
+t_test_attention_whitexinfo <- rbind(list_bpm, list_cbcl) %>% t.test(rnorm(attention) ~ factor(level), data = ., alt = "two.sided", na.rm = T) %>%
+  print()
+
+#black
+list_cbcl <- data %>% filter(Race_three == "2") %>% select("cbcl_scr_syn_attention_t") %>% rename(attention = cbcl_scr_syn_attention_t)
+list_cbcl$level <- 0
+list_bpm <- data %>% filter(Race_three == "2") %>% select("bpm_t_scr_attention_t") %>% rename(attention = bpm_t_scr_attention_t)
+list_bpm$level <- 1
+
+t_test_attention_blackxinfo <- rbind(list_bpm, list_cbcl) %>% t.test(rnorm(attention) ~ factor(level), data = ., alt = "two.sided", na.rm = T) %>%
+  print()
+
+
 ####Between racial-ethnic group and within informant####
 
 #####look at the mean of adhd_core_sum ... in each group####
