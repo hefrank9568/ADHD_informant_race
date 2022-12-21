@@ -25,7 +25,7 @@ data_descriptive_stats <- cbind(data_mean, data_sd, data_min, data_max, data_ran
 
 ####sum ksads core symp score####
 data$adhd_core_sum <- data %>% 
-  select(c("ksads_14_77_p", "ksads_14_76_p", "ksads_14_88_p","ksads_14_80_p", "ksads_14_81_p")) %>% ##why these five?
+  select(c("ksads_14_77_p", "ksads_14_76_p", "ksads_14_88_p","ksads_14_80_p", "ksads_14_81_p")) %>% ##why these five? Because they are the first questions? All are missing 151, which are the lowest missing value
   rowSums(na.rm = F)
 
 ####Within each racial-ethnic group across informant####
