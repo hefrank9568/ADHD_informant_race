@@ -106,19 +106,19 @@ data %>% group_by(Race_three) %>%
             mean_cbcl_totprob = mean(cbcl_scr_syn_totprob_t, na.rm = T), sd_cbcl_totprob = sd(cbcl_scr_syn_totprob_t, na.rm = T)) ##what about cbcl_scr_syn_attention_t?
 
 #####distribution of adhd core sum in each racial/ethnic group####
-ggplot(data, aes(x = factor(Race_three), y = rnorm(adhd_core_sum, mean = T))) +
+ggplot(data, aes(x = factor(Race_three), y = adhd_core_sum, mean = T)) +
   geom_violin(draw_quantiles = c(.25, .5, .75, .95))
 
-ggplot(data, aes(x = factor(Race_three), y = rnorm(cbcl_scr_syn_attention_t, mean = T))) +
+ggplot(data, aes(x = factor(Race_three), y = cbcl_scr_syn_attention_t, mean = T)) +
   geom_violin(draw_quantiles = c(.25, .5, .75, .95))
 
-ggplot(data, aes(x = factor(Race_three), y = rnorm(bpm_t_scr_attention_t, mean = T))) +
+ggplot(data, aes(x = factor(Race_three), y = bpm_t_scr_attention_t, mean = T)) +
   geom_violin(draw_quantiles = c(.25, .5, .75, .95))
 
-ggplot(data, aes(x = factor(Race_three), y = rnorm(cbcl_scr_syn_totprob_t, mean = T))) +
+ggplot(data, aes(x = factor(Race_three), y = cbcl_scr_syn_totprob_t, mean = T)) +
   geom_violin(draw_quantiles = c(.25, .5, .75, .95))
 
-ggplot(data, aes(x = factor(Race_three), y = rnorm(cbcl_scr_syn_external_t, mean = T))) +
+ggplot(data, aes(x = factor(Race_three), y = cbcl_scr_syn_external_t, mean = T)) +
   geom_violin(draw_quantiles = c(.25, .5, .75, .95))
 
 #####anova among racial-ethnic groups####
