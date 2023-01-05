@@ -84,7 +84,7 @@ combined$parent_edu_recoded <-
 library(lme4)
 interaction_combined_lmer <- lmer(attention ~ factor(level) * dummy(race)
                                           + factor(demo_sex_v2) + scale(interview_age) + 
-                                          scale(demo_comb_income_v2) + parent_edu_recoded +
+                                          scale(demo_comb_income_v2) + scale(parent_edu_recoded) +
                                           (1|subjectkey), data = combined)
 summary(interaction_combined_lmer)
 ####performance of the mixed model
