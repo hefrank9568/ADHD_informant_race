@@ -7,8 +7,8 @@ library(broom)
 library(purrr)
 options(scipen=999)
 ####Read data####
-path_dat <- "C:/Users/zpeng/OneDrive/Desktop/ABCD/Analysis data/ADHD_informant_race"
-#path_dat <- "/Users/quanfahe/Library/CloudStorage/OneDrive-UW-Madison/GradSchool/Research/ADHD_informant_race"
+#path_dat <- "C:/Users/zpeng/OneDrive/Desktop/ABCD/Analysis data/ADHD_informant_race"
+path_dat <- "/Users/quanfahe/Library/CloudStorage/OneDrive-UW-Madison/GradSchool/Research/ADHD_informant_race"
 data <- read.csv(file.path(path_dat, "abcd_merged.csv"))
 data <- data %>% filter(!is.na(Race_three))
 
